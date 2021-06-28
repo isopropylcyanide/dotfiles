@@ -16,6 +16,10 @@ function githash(){
   git rev-parse head
 }
 
+function portwho(){
+  lsof -nP | grep LISTEN | grep :$1
+}
+
 get_kube_context(){
     echo $KUBECONFIG | sed 's:.*/::'
 }
@@ -24,6 +28,9 @@ get_kube_context(){
 export LDFLAGS="-L/usr/local/opt/sqlite/lib -L/usr/local/opt/openssl@1.1/lib"
 export CPPFLAGS="-I/usr/local/opt/sqlite/include -I/usr/local/opt/openssl@1.1/include"
 
+# Colorized cat
+alias cat="ccat $*"
+alias cat0="/bin/cat $*" # for cases when you need plain `cat`
 
 # Rm has repercussions. BewareG
 alias rm='rm -i'
@@ -139,3 +146,44 @@ alias dport='docker service inspect --format="{{with index .Endpoint.Ports 0}}{{
 alias sds='docker stack'
 alias sdse='docker service'
 alias sdn='docker node'
+
+
+function code() {
+    if [[ $# = 0 ]]
+    then
+        open -a "Visual Studio Code"
+    else
+        [[ $1 = /* ]] && F="$1" || F="$PWD/${1#./}"
+        open -a "Visual Studio Code" --args "$F"
+    fi
+}
+
+function webs() {
+  open -na "WebStorm.app" --args "$@"
+}
+
+function goland() {
+  open -na "GoLand.app" --args "$@"
+}
+
+function idea() {
+  open -na "IntelliJ IDEA.app" --args "$@"
+}
+
+function clion() {
+  open -na "CLion.app" --args "$@"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
